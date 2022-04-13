@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.tsu.codewars2.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val viewbinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -18,23 +19,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(viewbinding.root)
         viewbinding.button2.setOnClickListener {
-            var numbers: IntArray = intArrayOf()
+
+
             val values = viewbinding.textView.text.toString()
             if(values.isEmpty())
             {
+                viewbinding.textView2.text="Введите данные"
                 throw NumberFormatException("Пустой массив, введите данные")
             }
-            val lstValues: List<String> = values.split(" ").map { it.trim() }
-            var arr = lstValues.toTypedArray()
-            println(arr[0])
-            numbers = arr.map { it.toInt() }.toIntArray()
-            println(numbers.contentToString())
+
+            var numbers= parseEditText(values )
             var output: IntArray = intArrayOf()
             output = sumParts(numbers)
-            println(output.contentToString())
             viewModel.add(numbers.contentToString(), output.contentToString())
+
+
+            viewbinding.textView2.text=output.joinToString()
         }
+
         initView()
+
+
+    }
+
+     fun parseEditText(values:String): IntArray {
+
+        var numbers: IntArray = intArrayOf()
+        val lstValues: List<String> = values.split(" ").map { it.trim() }
+        var arr = lstValues.toTypedArray()
+        println(arr[0])
+        numbers = arr.map { it.toInt() }.toIntArray()
+        println(numbers.contentToString())
+         return numbers
 
     }
 
