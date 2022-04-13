@@ -36,6 +36,9 @@ class MainActivityUITest : TestCase(){
 
     @Test
     fun checkEmptyStringInEditText_ExpectedErrorMessage() {
+        val strings = ""
+        onView(withId(R.id.textView)).check(matches(isDisplayed()))
+        onView(withId(R.id.textView)).perform(typeText(strings))
         onView(withId(R.id.button2)).perform(click())
         onView(withId(R.id.textView2)).check(matches((withText("Введите данные"))))
 
